@@ -16,6 +16,13 @@ export default new Vuex.Store({
     addComponent(state, component) {
       state.componentData.push(component);
     },
+    setCurComp(state,comp){
+      state.curComp=comp
+    },
+    setCurCompStyle(state,pos){
+      state.curComp.style.top=pos.top
+      state.curComp.style.left=pos.left
+    }
   },
   actions: {},
   modules: {},

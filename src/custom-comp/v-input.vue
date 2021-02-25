@@ -15,6 +15,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+input{
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+</style>>
 
-</style>
