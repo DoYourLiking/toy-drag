@@ -1,5 +1,5 @@
  <template>
-  <div class="right">这里是右边的属性选择区</div>
+  <div class="right">请选择组件</div>
 </template>
 
 <script>

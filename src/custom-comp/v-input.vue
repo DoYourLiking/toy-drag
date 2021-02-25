@@ -1,5 +1,5 @@
 <template>
-    <input v-model="defaultValue" placeholder="请输入" />
+    <input v-model="defaultValue" placeholder="请输入"/>
 </template>
 
 <script>
@@ -11,6 +11,9 @@ export default {
         element:{
             type:Object
         }
+    },
+    methods:{
+       
     }
 }
 </script>
@@ -20,6 +23,7 @@ input{
     width: 100%;
     height: 100%;
     border: none;
+    outline: none;
 }
 </style>>
 
