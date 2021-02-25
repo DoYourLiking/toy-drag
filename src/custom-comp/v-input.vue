@@ -1,5 +1,5 @@
 <template>
-    <el-input v-model="defaultValue" placeholder="请输入"></el-input>
+    <input v-model="defaultValue" placeholder="请输入" />
 </template>
 
 <script>

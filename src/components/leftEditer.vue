@@ -1,21 +1,28 @@
 <template>
-  <div class="leftEditer">
-    <div v-for="(comp, index) in compmentList" :key="index">
-      <i :class="item.icon"></i>
-      <span>{{ item.label }}</span>
+  <div class="leftEditer" @dragstart="handleDragstart">
+    <div v-for="(comp, index) in compMenu" :key="index" draggable="true" :data-index="index">
+      <i :class="comp.icon"></i>
+      <span>{{ comp.label }}</span>
     </div>
-    <div draggable="true">输入框</div>
   </div>
 </template>
 
 <script>
-import compmentList from "@/custom-comp/compment-list";
+import compMenu from "../custom-comp/compMenu";
 export default {
   name: "HelloWorld",
   data() {
     return {
-      compmentList,
+      compMenu,
     };
+  },
+  created(){
+    console.log(compMenu)
+  },
+  methods:{
+    handleDragstart(e){
+      e.dataTransfer.setData("index",e.target.dataset.index)
+    }
   },
   props: {
     msg: String,
