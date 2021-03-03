@@ -78,6 +78,7 @@ export default {
         };
         document.addEventListener("mouseup", rightmouseup);
       }
+      
     },
     stopPropagation(e) {
       //用来防止鼠标抬起时的click事情传播到center中的取选事件

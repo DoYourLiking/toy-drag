@@ -16,7 +16,9 @@
       >
         <component :is="item.component" :propValue="value"></component>
       </comp-wrapper>
+      
     </div>
+    <markLine ref="mark"></markLine>
   </div>
 </template>
 
@@ -27,6 +29,7 @@ import { mapState } from "vuex";
 import deepclone from "@/utils/deepclone";
 import createId from '@/utils/createId'
 import getRealstyle from '@/utils/getRealstyle'
+import markLine from '@/custom-comp/markLIne'
 export default {
   data() {
     return {
@@ -36,6 +39,7 @@ export default {
   },
   components: {
     compWrapper,
+    markLine
   },
   computed: mapState(["componentData","curComp"]),
   methods: {
@@ -44,11 +48,16 @@ export default {
       e.preventDefault();
       e.stopPropagation();
       const component =deepclone(compMenu[e.dataTransfer.getData("index")]);
-      component.style.left = e.offsetX;
-      component.style.top = e.offsetY;
+      let start=component.style.left = e.offsetX;
+      let width=component.style.width
+      let height=component.style.height
+      let heightStart=component.style.top = e.offsetY;
       component.id = createId();
-      console.log(component)
+      console.log(component.style)
       this.$store.commit('addComponent',component)
+      this.$store.commit('addWidthLine',{start,center:start+(width/2),end:start+width})
+      this.$store.commit('addHeightLine',{start:heightStart,center:heightStart+(height/2),end:heightStart+height})
+      console.log(this.$store.state.widthLine)
     },
     handleDragOver(e) {
       //拖拽中改变形态

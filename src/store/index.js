@@ -2,7 +2,17 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
-
+Array.prototype.delete=function(value){
+  let res=this.indexOf(value)
+  if(res!==-1){
+    this.splice(res,1)
+  }
+}
+Array.prototype.add=function(value){
+  if(!this.includes(value)){
+    this.push(value)
+  }
+}
 export default new Vuex.Store({
   state: {
     curComp: null,
@@ -11,6 +21,8 @@ export default new Vuex.Store({
     menuLeft: 0,
     menuShow: false,
     componentData: [],
+    widthLine:[],
+    heightLine:[],
   },
   mutations: {
     addComponent(state, component) {
@@ -20,7 +32,6 @@ export default new Vuex.Store({
       state.curComp = comp;
     },
     setCurCompStyle(state, pos) {
-      console.log(pos)
       if (pos.top) {
         state.curComp.style.top = pos.top;
       }
@@ -34,6 +45,22 @@ export default new Vuex.Store({
         state.curComp.style.height = pos.height;
       }
     },
+    addWidthLine(state,{start,center,end}){
+      state.widthLine.delete(state.curComp?.style.left)
+      state.widthLine.delete(state.curComp?.style.left+state.curComp?.style.width/2)
+      state.widthLine.delete(state.curComp?.style.left+state.curComp?.style.width)
+      state.widthLine.add(start)
+      state.widthLine.add(center)
+      state.widthLine.add(end)
+    },
+    addHeightLine(state,{start,center,end}){
+      state.heightLine.delete(state.curComp?.style.top)
+      state.heightLine.delete(state.curComp?.style.top+state.curComp?.style.height/2)
+      state.heightLine.delete(state.curComp?.style.top+state.curComp?.style.height)
+      state.heightLine.add(start)
+      state.heightLine.add(center)
+      state.heightLine.add(end)
+    }
   },
   actions: {},
   modules: {},

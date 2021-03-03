@@ -1,7 +1,7 @@
 const getRealStyle=function(style,index){
     const result = { ...style }
     // 按顺序添加 z-index 层级
-     result.zIndex = index
+     result.zIndex = index+1
      if (result.width) {
          result.width += 'px'
      }
