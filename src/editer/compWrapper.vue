@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import eventBus from "../utils/eventBus.js";
 export default {
   props: {
     active: {
@@ -47,14 +48,18 @@ export default {
         let startX = e.clientX;
         let startY = e.clientY;
         const leftmove = (moveE) => {
+          this.$store.commit("updateMarkLine");
           pos.left = Number(moveE.clientX) - Number(startX) + curX;
           pos.top = Number(moveE.clientY) - Number(startY) + curY;
           this.$store.commit("setCurCompStyle", pos);
           this.$nextTick(() => {
-            let a = document.getElementById("app").offsetTop;
+            eventBus.$emit("move");
           });
         };
         const leftmouseUp = () => {
+          this.$nextTick(() => {
+            eventBus.$emit("unmove");
+          });
           document.removeEventListener("mousemove", leftmove);
           document.removeEventListener("mouseup", leftmouseUp);
         };
@@ -62,23 +67,29 @@ export default {
         document.addEventListener("mouseup", leftmouseUp);
       } else {
         //左键拖动改变元素大小
+        let rightMove = () => {
+          this.$store.commit("updateMarkLine");
+          eventBus.$emit("move");
+        };
+        document.addEventListener("mousemove", rightMove);
         const rightmouseup = () => {
           let pos = {};
           console.log(
             (pos.width = /[0-9]*/.exec(this.$refs.wrapper.style.width)[0]),
             (pos.height = /[0-9]*/.exec(this.$refs.wrapper.style.height)[0])
           );
-          this.$store.commit("setCurCompStyle",pos);
+          this.$store.commit("setCurCompStyle", pos);
           let DragendTime = Date.now();
           if (DragendTime - dragStartTime <= 200) {
             console.log("右键鼠标出现");
             //展示自定义鼠标右键菜单
           }
+          eventBus.$emit("unmove");
+          document.removeEventListener("mousemove", rightMove);
           document.removeEventListener("mouseup", rightmouseup);
         };
         document.addEventListener("mouseup", rightmouseup);
       }
-      
     },
     stopPropagation(e) {
       //用来防止鼠标抬起时的click事情传播到center中的取选事件

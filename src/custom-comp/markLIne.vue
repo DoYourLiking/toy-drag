@@ -21,22 +21,30 @@
 
 <script>
 import { mapState } from "vuex";
+import eventBus from '@/utils/eventBus'
 export default {
   data() {
     return {
-      moving: true,
+      moving: false,
+      columnLineSet:new Set(this.widthLine),
+      linesSet:new Set(this.heightLine),
     };
   },
-  computed: mapState(["widthLine", "heightLine"]),
+  computed: mapState(["widthLine", "heightLine","curComp"]),
   created() {
     // console.log(this.widthLine)
     // console.log(this.$store.state.widthLine)
   },
   mounted() {
-   
+    eventBus.$on("move",()=>{
+      this.moving=true
+    }),
+    eventBus.$on("unmove",()=>{
+      this.moving=false
+    })
   },
   updated(){
-     console.log(this.widthLine)
+     
   },
   methods: {
     add() {},
@@ -51,17 +59,19 @@ export default {
   height: 800px;
   .width {
     position: absolute;
-    background: blue;
+    background: gray;
     width: 1px;
     height: 100%;
     z-index: 1;
+    opacity: 50%;
   }
   .height {
     position: absolute;
-    background: blue;
+    background: gray;
     height: 1px;
     width: 100%;
     z-index: 1;
+    opacity: 50%;
   }
 }
 </style>

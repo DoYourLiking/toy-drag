@@ -2,17 +2,17 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
-Array.prototype.delete=function(value){
-  let res=this.indexOf(value)
-  if(res!==-1){
-    this.splice(res,1)
+Array.prototype.delete = function (value) {
+  let res = this.indexOf(value);
+  if (res !== -1) {
+    this.splice(res, 1);
   }
-}
-Array.prototype.add=function(value){
-  if(!this.includes(value)){
-    this.push(value)
+};
+Array.prototype.add = function (value) {
+  if (!this.includes(value)) {
+    this.push(value);
   }
-}
+};
 export default new Vuex.Store({
   state: {
     curComp: null,
@@ -21,8 +21,8 @@ export default new Vuex.Store({
     menuLeft: 0,
     menuShow: false,
     componentData: [],
-    widthLine:[],
-    heightLine:[],
+    widthLine: [],
+    heightLine: [],
   },
   mutations: {
     addComponent(state, component) {
@@ -38,29 +38,39 @@ export default new Vuex.Store({
       if (pos.left) {
         state.curComp.style.left = pos.left;
       }
-      if(pos.width){
+      if (pos.width) {
         state.curComp.style.width = pos.width;
       }
-      if(pos.height){
+      if (pos.height) {
         state.curComp.style.height = pos.height;
       }
     },
-    addWidthLine(state,{start,center,end}){
-      state.widthLine.delete(state.curComp?.style.left)
-      state.widthLine.delete(state.curComp?.style.left+state.curComp?.style.width/2)
-      state.widthLine.delete(state.curComp?.style.left+state.curComp?.style.width)
-      state.widthLine.add(start)
-      state.widthLine.add(center)
-      state.widthLine.add(end)
+    updateMarkLine(state){
+        state.widthLine=[]
+        state.heightLine=[]
+      state.componentData.forEach(element => {
+        if(element!==state.curComp){
+          let left=element.style.left
+          let top=element.style.top
+          let width=element.style.width
+          let height=element.style.height
+          let add=function(left,width,set){
+            set.push(left)
+            set.push(left+(width>>1))
+            set.push(left+width)
+          }
+          add(left,width,state.widthLine)
+          add(top,height,state.heightLine)
+        }
+      });
+      console.log()
     },
-    addHeightLine(state,{start,center,end}){
-      state.heightLine.delete(state.curComp?.style.top)
-      state.heightLine.delete(state.curComp?.style.top+state.curComp?.style.height/2)
-      state.heightLine.delete(state.curComp?.style.top+state.curComp?.style.height)
-      state.heightLine.add(start)
-      state.heightLine.add(center)
-      state.heightLine.add(end)
-    }
+    showContextMenu(state, { top, left }) {
+      state.menuShow = true
+      state.menuTop = top
+      state.menuLeft = left
+    },
+
   },
   actions: {},
   modules: {},
