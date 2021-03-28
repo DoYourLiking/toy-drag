@@ -19,6 +19,9 @@ export default {
         'menuLeft',
         'menuShow',
     ]),
+    mounted(){
+        
+    },
     methods: {
         deleteComponent() {
             this.$store.commit('deleteComponent')

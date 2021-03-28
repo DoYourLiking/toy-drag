@@ -41,6 +41,7 @@ export default {
   components: {
     compWrapper,
     markLine,
+    contextMenu
   },
   computed: mapState(["componentData", "curComp"]),
   methods: {

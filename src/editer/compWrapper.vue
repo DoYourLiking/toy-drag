@@ -39,12 +39,13 @@ export default {
       //选中当前元素
       this.$store.commit("setCurComp", this.el);
       let dragStartTime = Date.now();
-      if (e.button === 0) {
-        //右键拖动改变元素位置
-        const pos = { ...this.initStyle };
+      const pos = { ...this.initStyle };
         //闭包保存每次点击前的初始位置
         const curX = pos.left;
         const curY = pos.top;
+      if (e.button === 0) {
+        //右键拖动改变元素位置
+        
         let startX = e.clientX;
         let startY = e.clientY;
         const leftmove = (moveE) => {
@@ -56,7 +57,7 @@ export default {
             eventBus.$emit("move");
           });
         };
-        const leftmouseUp = () => {
+        const leftmouseUp = (e) => {
           this.$nextTick(() => {
             eventBus.$emit("unmove");
           });
@@ -66,13 +67,14 @@ export default {
         document.addEventListener("mousemove", leftmove);
         document.addEventListener("mouseup", leftmouseUp);
       } else {
-        //左键拖动改变元素大小
+        //右键拖动改变元素大小
         let rightMove = () => {
           this.$store.commit("updateMarkLine");
           eventBus.$emit("move");
         };
         document.addEventListener("mousemove", rightMove);
-        const rightmouseup = () => {
+        const rightmouseup = (e) => {
+          console.log(e)
           let pos = {};
           console.log(
             (pos.width = /[0-9]*/.exec(this.$refs.wrapper.style.width)[0]),
@@ -82,13 +84,13 @@ export default {
           let DragendTime = Date.now();
           if (DragendTime - dragStartTime <= 200) {
             console.log("右键鼠标出现");
-            //展示自定义鼠标右键菜单
+            this.$store.commit("showContextMenu",{left:e.clientX-80,top:e.clientY-40})
           }
           eventBus.$emit("unmove");
           document.removeEventListener("mousemove", rightMove);
           document.removeEventListener("mouseup", rightmouseup);
         };
-        document.addEventListener("mouseup", rightmouseup);
+        document.addEventListener("mouseup", rightmouseup(e),true);
       }
     },
     stopPropagation(e) {
