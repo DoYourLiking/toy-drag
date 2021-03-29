@@ -6,6 +6,8 @@
             <li @click="bottomComponent">置底</li>
             <li @click="upComponent">上移</li>
             <li @click="downComponent">下移</li>
+            <li @click="ctrlX">撤销</li>
+            <li @click="remain">恢复</li>
         </ul>
     </div>
 </template>
@@ -49,6 +51,12 @@ export default {
         },
         closeContext(){
             this.$store.commit("closeContext")
+        },
+        ctrlX(){
+            this.$store.commit("undo")
+        },
+        remain(){
+            this.$store.commit('redo')
         }
     },
 }

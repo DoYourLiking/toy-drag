@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div class="header">操作区</div>
+    <div class="header">
+      
+    </div>
     <router-view/>
     <div class="footer"></div>
   </div>

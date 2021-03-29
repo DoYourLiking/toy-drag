@@ -23,6 +23,8 @@ export default new Vuex.Store({
     componentData: [],
     widthLine: [],
     heightLine: [],
+    record: [],
+    recordIndex: -1,
   },
   mutations: {
     addComponent(state, component) {
@@ -89,24 +91,51 @@ export default new Vuex.Store({
       }
     },
     down(state) {
-      if(state.curCompZIndex ===0 ){
-        alert("已经到底了")
-      }else{
-        swap(state.componentData,state.curCompZIndex,state.curCompZIndex-1)
+      if (state.curCompZIndex === 0) {
+        alert("已经到底了");
+      } else {
+        swap(state.componentData, state.curCompZIndex, state.curCompZIndex - 1);
       }
     },
     toTop(state) {
       if (state.curCompZIndex == state.componentData.length - 1) {
         alert("已经最高了");
-      }else{
-        swap(state.componentData, state.curCompZIndex, state.curCompZIndex .length-1)
+      } else {
+        swap(
+          state.componentData,
+          state.curCompZIndex,
+          state.curCompZIndex.length - 1
+        );
       }
     },
     toBottom(state) {
-      if(state.curCompZIndex ===0 ){
-        alert("已经到底了")
+      if (state.curCompZIndex === 0) {
+        alert("已经到底了");
+      } else {
+        swap(state.componentData, state.curCompZIndex, 0);
+      }
+    },
+    addRecord(state) {
+      if(state.recordIndex<state.record.length-1){
+          state.record=state.record.slice(0,state.recordIndex+1)
+      }
+      state.record.push(state.componentData);
+      state.recordIndex++;
+    },
+    undo(state) {
+      if (state.recordIndex >= 1) {
+        state.recordIndex--;
+        state.componentData = state.record[state.recordIndex].slice();
       }else{
-        swap(state.componentData, state.curCompZIndex, 0)
+        alert("无可撤销操作")
+      }
+    },
+    redo(state) {
+      if (state.recordIndex < state.record.length - 1) {
+        state.recordIndex++;
+        state.componentData = state.record[state.recordIndex];
+      } else {
+        alert("无可重做操作");
       }
     },
   },

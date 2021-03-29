@@ -42,7 +42,7 @@ export default {
   components: {
     compWrapper,
     markLine,
-    contextMenu
+    contextMenu,
   },
   computed: mapState(["componentData", "curComp"]),
   methods: {
@@ -56,9 +56,10 @@ export default {
       let height = component.style.height;
       let heightStart = (component.style.top = e.offsetY);
       component.id = createId();
-      console.log(component.style);
       this.$store.commit("addComponent", component);
       this.$store.commit("updateMarkLine");
+      this.$store.commit("addRecord")
+      console.log(this.$store.state.record,this.$store.state.recordIndex)
     },
     handleDragOver(e) {
       //拖拽中改变形态
@@ -72,7 +73,7 @@ export default {
       e.preventDefault();
       e.stopPropagation();
       this.$store.commit("setCurComp", null);
-      this.$store.commit("closeContext")
+      this.$store.commit("closeContext");
     },
   },
 };
