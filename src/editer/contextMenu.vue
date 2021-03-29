@@ -1,5 +1,5 @@
 <template>
-    <div class="contextmenu" v-show="menuShow" :style="{ top: menuTop + 'px', left: menuLeft + 'px' }">
+    <div class="contextmenu" v-show="menuShow" :style="{ top: menuTop + 'px', left: menuLeft + 'px' }" @click="closeContext">
         <ul>
             <li @click="deleteComponent">删除</li>
             <li @click="topComponent">置顶</li>
@@ -24,29 +24,32 @@ export default {
     },
     methods: {
         deleteComponent() {
-            this.$store.commit('deleteComponent')
-            this.$store.commit('recordSnapshot')
+            this.$store.commit('delete')
+            // this.$store.commit('recordSnapshot')
         },
 
         upComponent() {
-            this.$store.commit('upComponent')
-            this.$store.commit('recordSnapshot')
+            this.$store.commit('up')
+            // this.$store.commit('recordSnapshot')
         },
 
         downComponent() {
-            this.$store.commit('downComponent')
-            this.$store.commit('recordSnapshot')
+            this.$store.commit('down')
+            // this.$store.commit('recordSnapshot')
         },
 
         topComponent() {
-            this.$store.commit('topComponent')
-            this.$store.commit('recordSnapshot')
+            this.$store.commit('toTop')
+            // this.$store.commit('recordSnapshot')
         },
 
         bottomComponent() {
-            this.$store.commit('bottomComponent')
-            this.$store.commit('recordSnapshot')
+            this.$store.commit('toBottom')
+            // this.$store.commit('recordSnapshot')
         },
+        closeContext(){
+            this.$store.commit("closeContext")
+        }
     },
 }
 </script>

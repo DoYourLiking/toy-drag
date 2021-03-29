@@ -13,6 +13,7 @@
         :el="item"
         :initStyle="item.style"
         :active="curComp === item"
+        :zIndex="index"
       >
         <component :is="item.component" :propValue="value"></component>
       </comp-wrapper>
@@ -71,6 +72,7 @@ export default {
       e.preventDefault();
       e.stopPropagation();
       this.$store.commit("setCurComp", null);
+      this.$store.commit("closeContext")
     },
   },
 };

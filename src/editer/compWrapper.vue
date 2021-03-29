@@ -38,6 +38,7 @@ export default {
       e.stopPropagation();
       //选中当前元素
       this.$store.commit("setCurComp", this.el);
+      this.$store.commit("SetCurIndex",this.zIndex)
       let dragStartTime = Date.now();
       const pos = { ...this.initStyle };
         //闭包保存每次点击前的初始位置
