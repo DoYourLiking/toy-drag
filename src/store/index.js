@@ -65,7 +65,6 @@ export default new Vuex.Store({
           add(top, height, state.heightLine);
         }
       });
-      console.log();
     },
     showContextMenu(state, { top, left }) {
       state.menuShow = true;
@@ -119,17 +118,19 @@ export default new Vuex.Store({
       if(state.recordIndex<state.record.length-1){
           state.record=state.record.slice(0,state.recordIndex+1)
       }
-      state.record.push(state.componentData);
+      state.record.push(state.componentData.slice()); 
       state.recordIndex++;
     },
     undo(state) {
       if (state.recordIndex >= 1) {
         state.recordIndex--;
-        state.componentData = state.record[state.recordIndex].slice();
+        console.log(state.record)
+        Vue.set(state,'componentData',state.record[state.recordIndex])
       }else{
         alert("无可撤销操作")
       }
     },
+   
     redo(state) {
       if (state.recordIndex < state.record.length - 1) {
         state.recordIndex++;

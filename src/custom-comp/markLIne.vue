@@ -69,7 +69,8 @@ export default {
       this.diffAndshow(left+(width>>1), "", this.column, this.showColumns,1);
       this.diffAndshow(left+width, "", this.column, this.showColumns,2);
       this.diffAndshow(top, "top", this.lineSet, this.showLines,0);
-      this.diffAndshow(top+height, "", this.lineSet, this.showLines,1);
+      this.diffAndshow(top+(height>>1), "", this.lineSet, this.showLines,1);
+      this.diffAndshow(top+height, "", this.lineSet, this.showLines,2);
     },
     diffAndshow(value, direction, set, arr,item) {
       for (let i = -this.diff; i <= this.diff; i++) {
